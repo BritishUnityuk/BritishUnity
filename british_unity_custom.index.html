@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>British Unity</title>
+  <!-- Inline styles ensure the design works even when opened locally on mobile devices -->
+  <style>
+    :root {
+      --primary-color: #012169;   /* dark blue */
+      --secondary-color: #C8102E; /* red */
+      --light-color: #ffffff;
+      --text-color: #333333;
+      --background-color: #f8f9fa;
+      --accent-color: #e5e5e5;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Roboto', sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--background-color);
+      padding-top: 70px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(1, 33, 105, 0.95);
+      color: var(--light-color);
+      z-index: 1000;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--light-color);
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+    }
+    nav ul li {
+      margin-left: 1.5rem;
+    }
+    nav ul li a {
+      color: var(--light-color);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    nav ul li a:hover {
+      color: var(--secondary-color);
+    }
+    nav ul li .donate-btn {
+      background-color: var(--secondary-color);
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      color: var(--light-color);
+      transition: background-color 0.3s ease;
+    }
+    nav ul li .donate-btn:hover {
+      background-color: #a50d23;
+    }
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--light-color);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    .hero {
+      position: relative;
+      height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--light-color);
+      /* Use a gradient in place of the flag image for better mobile compatibility */
+      background: linear-gradient(135deg, var(--primary-color) 50%, var(--secondary-color) 50%);
+    }
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        to bottom right,
+        rgba(1, 33, 105, 0.6),
+        rgba(200, 16, 46, 0.6)
+      );
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+      padding: 0 1rem;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    .hero p {
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .btn.primary {
+      background-color: var(--secondary-color);
+      color: var(--light-color);
+    }
+    .btn.primary:hover {
+      background-color: #a50d23;
+    }
+    .btn.secondary {
+      background-color: var(--light-color);
+      color: var(--primary-color);
+      border: 2px solid var(--secondary-color);
+    }
+    .btn.secondary:hover {
+      background-color: var(--secondary-color);
+      color: var(--light-color);
+    }
+    .section {
+      padding: 80px 0;
+    }
+    .section h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      color: var(--primary-color);
+    }
+    .about p {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      text-align: center;
+    }
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+    .value-item {
+      background-color: var(--light-color);
+      padding: 1.5rem;
+      border-radius: 6px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease;
+    }
+    .value-item i {
+      color: var(--secondary-color);
+      margin-bottom: 0.5rem;
+    }
+    .value-item h3 {
+      margin-bottom: 0.5rem;
+      font-size: 1.25rem;
+      color: var(--primary-color);
+    }
+    .value-item p {
+      font-size: 0.95rem;
+    }
+    .value-item:hover {
+      transform: translateY(-5px);
+    }
+    .event-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    .event {
+      background-color: var(--light-color);
+      padding: 1.5rem;
+      border-left: 4px solid var(--secondary-color);
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .event h3 {
+      margin-bottom: 0.5rem;
+      font-size: 1.3rem;
+      color: var(--primary-color);
+    }
+    .event .date {
+      font-weight: bold;
+      color: var(--secondary-color);
+      margin-bottom: 0.5rem;
+    }
+    form {
+      margin-top: 1.5rem;
+    }
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    form input,
+    form textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--accent-color);
+      border-radius: 4px;
+      font-size: 1rem;
+      background-color: #fff;
+    }
+    form textarea {
+      resize: vertical;
+    }
+    form button {
+      margin-top: 1rem;
+    }
+    .contact-info {
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+    .contact-info p {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .contact-info i {
+      color: var(--secondary-color);
+    }
+    .contact-info a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+    .contact-info a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      background-color: var(--primary-color);
+      color: var(--light-color);
+      padding: 1rem 0;
+      text-align: center;
+    }
+    footer .social-media {
+      margin-top: 0.5rem;
+    }
+    footer .social-media a {
+      color: var(--light-color);
+      margin: 0 0.5rem;
+      font-size: 1.2rem;
+      transition: color 0.3s ease;
+    }
+    footer .social-media a:hover {
+      color: var(--secondary-color);
+    }
+    @media (max-width: 768px) {
+      nav ul {
+        position: absolute;
+        top: 70px;
+        right: 0;
+        flex-direction: column;
+        background-color: rgba(1, 33, 105, 0.95);
+        width: 200px;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1);
+      }
+      nav ul.show {
+        transform: translateX(0);
+      }
+      nav ul li {
+        margin: 1rem 0;
+      }
+      .nav-toggle {
+        display: block;
+      }
+    }
+  </style>
+  <!-- Font Awesome icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo">British&nbsp;Unity</div>
+      <nav id="navbar">
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#values">Values</a></li>
+          <li><a href="#events">Events</a></li>
+          <li><a href="#join">Join</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#donate" class="donate-btn">Donate</a></li>
+        </ul>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+    </div>
+  </header>
+  <section id="home" class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>British Unity</h1>
+      <p>Bringing people together for a stronger, united Britain.</p>
+      <div class="cta-buttons">
+        <a href="#join" class="btn primary">Join Us</a>
+        <a href="#donate" class="btn secondary">Donate</a>
+      </div>
+    </div>
+  </section>
+  <section id="about" class="about section">
+    <div class="container">
+      <h2>About Us</h2>
+      <p>British Unity is more than a movement — it’s a voice for the millions of proud Britons who believe our nation’s values, culture, and heritage deserve protection and respect. We stand for a Britain that puts its people first, defends its sovereignty, and never apologises for being patriotic.</p>
+      <p>Our mission is to bring together ordinary, hard‑working men and women who are tired of seeing our country’s traditions undermined and our national pride dismissed. We believe in free speech, fairness, and common sense — values that built this nation and must never be forgotten.</p>
+      <p>British Unity exists to give a platform to those who feel ignored by the political establishment. We believe in strong borders, law and order, and accountability from those in power. We back our armed forces, our veterans, and our police — the men and women who keep Britain safe.</p>
+      <p>We honour our flag, our history, and our communities.</p>
+      <p>Economically, we support British industry and self‑reliance. We believe in creating opportunities for our own people first, supporting local businesses, and ensuring that every British worker has the chance to succeed. We reject the idea that global corporations or unelected foreign bodies should dictate Britain’s future.</p>
+      <p>Culturally, we believe in unity — one people under one flag, respecting all who call Britain home but expecting the same loyalty in return. Our aim is to strengthen the ties that bind us together: pride in our nation, respect for our heritage, and hope for our future.</p>
+      <p>British Unity stands for patriotism without shame, truth without censorship, and a future where the silent majority are silent no longer.</p>
+    </div>
+  </section>
+  <section id="values" class="values section">
+    <div class="container">
+      <h2>Our Values</h2>
+      <div class="value-grid">
+        <div class="value-item">
+          <i class="fa fa-users fa-2x" aria-hidden="true"></i>
+          <h3>Unity</h3>
+          <p>We believe Britain is strongest when her people stand together — one nation, one flag, one future. Unity means putting aside division and remembering that, whatever our differences, we are all part of the same proud island story.</p>
+          <p>Our unity is built on shared values: loyalty, respect, and love for our country. It’s about supporting one another as Britons, defending our freedoms, and protecting the traditions that bind us together.</p>
+          <p>We reject the politics of hate, separatism, and division. We believe every citizen — from every region and background — has a role to play in keeping our country strong, safe, and united.</p>
+          <p>British Unity stands for one voice, one people, and one proud United Kingdom.</p>
+        </div>
+        <div class="value-item">
+          <i class="fa fa-balance-scale fa-2x" aria-hidden="true"></i>
+          <h3>Democracy</h3>
+          <p>We believe in true democracy — the power of the people to shape Britain’s future. Our nation’s strength comes from the voices of ordinary citizens, not unelected bureaucrats or distant elites. Every vote should matter, and every Briton should be heard.</p>
+          <p>British Unity stands firmly against censorship, corruption, and the erosion of free speech. We defend the right of the people to question authority, to challenge bad leadership, and to hold those in power accountable.</p>
+          <p>Democracy is not a privilege granted by the establishment — it is a birthright earned through generations of struggle and sacrifice. We honour that legacy by demanding transparency, fairness, and freedom in every level of government.</p>
+          <p>Our democracy belongs to the British people — and we will always fight to keep it that way.</p>
+        </div>
+        <div class="value-item">
+          <i class="fa fa-equalizer fa-2x" aria-hidden="true"></i>
+          <h3>Equality</h3>
+          <p>We believe in equality for the British people — equal rights, equal respect, and equal opportunity for every citizen of this nation. Too often, ordinary Britons are overlooked while others are put first. British Unity stands to change that.</p>
+          <p>True equality means putting our own people on an equal footing in their own country. It means fairness in housing, jobs, education, and justice — ensuring that those who work hard, pay their taxes, and uphold our values are never pushed aside or forgotten.</p>
+          <p>We reject favouritism, discrimination, and double standards. Every Briton should be treated with the same respect and dignity, regardless of where they come from within our United Kingdom.</p>
+          <p>Equality should unite our people — not divide them. British Unity believes in one law, one nation, and one people standing together for a fairer Britain.</p>
+        </div>
+        <div class="value-item">
+          <i class="fa fa-hand-holding-heart fa-2x" aria-hidden="true"></i>
+          <h3>Community Service</h3>
+          <p>We believe that the strength of Britain lies in the character of her people — neighbours helping neighbours, families supporting one another, and communities standing strong in times of need.</p>
+          <p>British Unity stands for a return to the values that built our towns and villages: decency, compassion, and responsibility. We believe in lending a hand to those who have fallen on hard times, not because the government tells us to, but because it’s the right thing to do.</p>
+          <p>Community service is about more than charity — it’s about pride. Pride in where we live, pride in helping others, and pride in being part of something greater than ourselves. When Britons look out for one another, no challenge is too great.</p>
+          <p>We believe in rebuilding that local spirit across our nation — restoring trust, respect, and kindness in every street, estate, and town. Together, we can bring back a sense of belonging and make Britain a nation that truly cares for its own.</p>
+        </div>
+        <div class="value-item">
+          <i class="fa fa-landmark fa-2x" aria-hidden="true"></i>
+          <h3>Heritage</h3>
+          <p>We are proud of our heritage — the centuries of history, courage, and achievement that built this nation. From the coalfields to the shipyards, from the farms to the factories, from our armed forces to our Royal traditions — Britain’s story is one of hard work, sacrifice, and pride.</p>
+          <p>British Unity believes our heritage is not something to be ashamed of, but something to celebrate. It reminds us who we are, where we came from, and what generations before us fought to protect. Our language, customs, and way of life are the backbone of our national identity — they deserve honour, not erasure.</p>
+          <p>We reject attempts to rewrite or apologise for our history. Every nation has its past, but few can match the spirit, innovation, and bravery of the British people. Our monuments, traditions, and national symbols tell the story of a country that has led, built, and inspired the world.</p>
+          <p>To be British is to inherit something extraordinary — a legacy of freedom, courage, and unity. British Unity stands to defend that legacy and ensure our heritage is preserved with pride for generations to come.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="events" class="events section">
+    <div class="container">
+      <h2>Upcoming Events</h2>
+      <p>Check back soon!</p>
+    </div>
+  </section>
+  <section id="join" class="join section">
+    <div class="container">
+      <h2>Join British Unity</h2>
+      <p>Become part of a movement that celebrates our true British Values and works to build a brighter future. Sign up below to get involved!</p>
+      <form class="join-form" action="#" method="post">
+        <div class="form-row">
+          <input type="text" name="name" placeholder="Full name" required>
+          <input type="email" name="email" placeholder="Email address" required>
+        </div>
+        <div class="form-row">
+          <input type="text" name="postcode" placeholder="Postcode">
+          <input type="tel" name="phone" placeholder="Phone number">
+        </div>
+        <textarea name="message" placeholder="Tell us why you want to join" rows="4"></textarea>
+        <button type="submit" class="btn primary">Sign Up</button>
+      </form>
+    </div>
+  </section>
+  <section id="contact" class="contact section">
+    <div class="container">
+      <h2>Contact Us</h2>
+      <p>If you have questions or would like to work with British Unity, please get in touch.</p>
+      <div class="contact-info">
+        <p><i class="fa fa-envelope"></i> <a href="mailto:officialbritishunity@gmail.com">officialbritishunity@gmail.com</a></p>
+      </div>
+      <form class="contact-form" action="#" method="post">
+        <input type="text" name="cname" placeholder="Your name" required>
+        <input type="email" name="cemail" placeholder="Your email" required>
+        <textarea name="cmessage" placeholder="Your message" rows="4" required></textarea>
+        <button type="submit" class="btn secondary">Send Message</button>
+      </form>
+    </div>
+  </section>
+  <footer>
+    <div class="container">
+      <p>&copy;&nbsp;2025 British Unity. All rights reserved.</p>
+      <div class="social-media">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+  </footer>
+  <!-- Inline script to handle mobile navigation toggle -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const navToggle = document.querySelector('.nav-toggle');
+      const navList   = document.querySelector('nav ul');
+      const navLinks  = navList.querySelectorAll('a');
+      navToggle.addEventListener('click', function () {
+        navList.classList.toggle('show');
+      });
+      navLinks.forEach(function (link) {
+        link.addEventListener('click', function () {
+          if (navList.classList.contains('show')) {
+            navList.classList.remove('show');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
